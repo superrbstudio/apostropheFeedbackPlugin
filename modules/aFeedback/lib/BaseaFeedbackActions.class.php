@@ -24,7 +24,9 @@ abstract class BaseaFeedbackActions extends sfActions
     
 		if ($request->isMethod('post'))
 		{
-			$this->form->bind(array_merge($request->getParameter('feedback'), array('captcha' => $request->getParameter('captcha'))), $request->getFiles('feedback'));
+
+			$this->form->bind($request->getParameter('feedback'), $request->getFiles('feedback'));			
+			// $this->form->bind(array_merge($request->getParameter('feedback'), array('captcha' => $request->getParameter('captcha'))), $request->getFiles('feedback'));
 			if ($this->form->isValid())
 			{
 				$feedback = $this->form->getValues();

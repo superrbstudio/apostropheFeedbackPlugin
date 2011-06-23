@@ -1,4 +1,4 @@
-# Apostrophe Feedback Plugin
+# Apostrophe Feedback Plugin for Apostrophe 1.5
 
 For complete and extensive documentation of Apostrophe please visit
 [trac.apostrophenow.org](http://trac.apostrophenow.org/wiki/ManualOverview). There you'll find a complete manual organized much more conveniently than is possible with a README file.
@@ -26,7 +26,7 @@ aFeedback:
 2. The feedback plugin requires some CSS and Javascript to fully function. Add these assets to your project level view.yml [ /apps/frontend/config/view.yml ] :
 
 stylesheets:
-  - /apostropheFeedbackPlugin/css/aFeedback.css
+  - /apostropheFeedbackPlugin/css/aFeedback.less
 javascripts:
   - /apostropheFeedbackPlugin/js/aFeedback.js
 
