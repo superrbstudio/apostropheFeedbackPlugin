@@ -34,19 +34,17 @@ abstract class BaseaFeedbackActions extends sfActions
 				
         try
         {
-          aZendSearch::registerZend();
-          $mail = new Zend_Mail();
-          $mail->setBodyText($this->getPartial('feedbackEmailText', array('feedback' => $feedback)))
-              ->setFrom($feedback['email'], $feedback['name'])
-              ->addTo(sfConfig::get('app_aFeedback_email_auto'))
-              ->setSubject($this->form->getValue('subject', 'New aBugReport submission'));
-
+          // Use the SwiftMailer hotness built into Symfony, not Zend Mail
+          $message = $this->getMailer()->compose(
+                array($feedback['email'] => $feedback['name']),
+                sfConfig::get('app_aFeedback_email_auto'),
+                $this->form->getValue('subject', 'New aBugReport submission'),
+                $this->getPartial('feedbackEmailText', array('feedback' => $feedback)));
           if ($screenshot = $this->form->getValue('screenshot'))
           {
-            $mail->createAttachment(file_get_contents($screenshot->getTempName()), $screenshot->getType());
+            $message->attach(Swift_Attachment::fromPath($screenshot->getTempName(), $screenshot->getType()));
           }
-          
-          $mail->send();
+          $this->getMailer()->send($message);
 
           // A new form for a new submission
           $this->form = new aFeedbackForm();      
